@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title }}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; color: #333; }
+    
+    .lock-screen {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .lock-box {
+      background: white; padding: 3rem; border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; max-width: 360px; width: 90%;
+    }
+    .lock-box h1 { font-size: 1.4rem; margin-bottom: 0.5rem; color: #333; }
+    .lock-box p { font-size: 0.9rem; color: #666; margin-bottom: 1.5rem; }
+    .lock-box input {
+      width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px;
+      font-size: 1rem; text-align: center; letter-spacing: 4px; outline: none; transition: border-color 0.2s;
+    }
+    .lock-box input:focus { border-color: #667eea; }
+    .lock-box button {
+      width: 100%; padding: 12px; margin-top: 1rem; background: #667eea; color: white;
+      border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background 0.2s;
+    }
+    .lock-box button:hover { background: #5a6fd6; }
+    .lock-box .error { color: #e74c3c; font-size: 0.85rem; margin-top: 0.8rem; display: none; }
+    .lock-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    .content-wrapper {
+      display: none; max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem;
+    }
+    .content-wrapper.visible { display: block; }
+    .site-header {
+      border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .site-header a { color: #667eea; text-decoration: none; font-weight: 600; }
+    .site-header .logout { font-size: 0.85rem; color: #999; cursor: pointer; }
+    .site-header .logout:hover { color: #e74c3c; }
+
+    .content h1 { font-size: 1.8rem; margin: 1.5rem 0 1rem; color: #2c3e50; }
+    .content h2 { font-size: 1.4rem; margin: 1.5rem 0 0.8rem; color: #34495e; }
+    .content h3 { font-size: 1.15rem; margin: 1.2rem 0 0.6rem; color: #4a5568; }
+    .content p { margin: 0.6rem 0; }
+    .content blockquote { border-left: 4px solid #667eea; padding: 0.5rem 1rem; margin: 1rem 0; background: #f8f9ff; border-radius: 0 8px 8px 0; }
+    .content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+    .content th, .content td { padding: 10px 12px; border: 1px solid #e0e0e0; text-align: left; }
+    .content th { background: #f5f6fa; font-weight: 600; }
+    .content a { color: #667eea; }
+    .content hr { border: none; border-top: 1px solid #eee; margin: 1.5rem 0; }
+    .content code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+    .content pre { background: #f5f6fa; padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; }
+    .content ul, .content ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+    .content li { margin: 0.3rem 0; }
+    .content strong { color: #2c3e50; }
+  </style>
+</head>
+<body>
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-box">
+      <div class="lock-icon">🙏</div>
+      <h1>기도문 모음</h1>
+      <p>열람을 위해 암호를 입력하세요</p>
+      <input type="password" id="pwdInput" placeholder="••••" maxlength="10" autocomplete="off">
+      <button onclick="checkPassword()">확인</button>
+      <p class="error" id="errorMsg">암호가 올바르지 않습니다</p>
+    </div>
+  </div>
+
+  <div class="content-wrapper" id="contentWrapper">
+    <div class="site-header">
+      <a href="{{ '/' | relative_url }}">🙏 기도문 모음</a>
+      <span class="logout" onclick="doLogout()">잠금</span>
+    </div>
+    <div class="content">
+      {{ content }}
+    </div>
+  </div>
+
+  <script>
+    var H = 'a3d2a04ef9a917decb0a1c53fb3e04cb';
+    function md5(s){var a,b,c,d,e,f,g,h,i,j,k,l,m,n=[],o=function(a,b){return a+b&4294967295},p=function(a,b){return o(a<<b|a>>>32-b,a)};for(s=unescape(encodeURI(s)),a=[],a.length=s.length/4+1,b=0;b<a.length;b++)a[b]=0;for(b=0;b<s.length;b++)a[b>>2]|=s.charCodeAt(b)<<(b%4<<3);a[b>>2]|=128<<(b%4<<3);a[a.length-1]=8*s.length;c=1732584193;d=-271733879;e=-1732584194;f=271733878;for(b=0;b<a.length;b+=16){g=c;h=d;i=e;j=f;for(k=0;k<64;k++){if(k<16){l=d&e|~d&f;m=k}else if(k<32){l=f&d|~f&e;m=(5*k+1)%16}else if(k<48){l=d^e^f;m=(3*k+5)%16}else{l=e^(d|~f);m=(7*k)%16}n=[7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];var q=[0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,0xa8304613,0xfd469501,0x698098d8,0x8b44f7af,0xffff5bb1,0x895cd7be,0x6b901122,0xfd987193,0xa679438e,0x49b40821,0xf61e2562,0xc040b340,0x265e5a51,0xe9b6c7aa,0xd62f105d,0x02441453,0xd8a1e681,0xe7d3fbc8,0x21e1cde6,0xc33707d6,0xf4d50d87,0x455a14ed,0xa9e3e905,0xfcefa3f8,0x676f02d9,0x8d2a4c8a,0xfffa3942,0x8771f681,0x6d9d6122,0xfde5380c,0xa4beea44,0x4bdecfa9,0xf6bb4b60,0xbebfbc70,0x289b7ec6,0xeaa127fa,0xd4ef3085,0x04881d05,0xd9d4d039,0xe6db99e5,0x1fa27cf8,0xc4ac5665,0xf4292244,0x432aff97,0xab9423a7,0xfc93a039,0x655b59c3,0x8f0ccc92,0xffeff47d,0x85845dd1,0x6fa87e4f,0xfe2ce6e0,0xa3014314,0x4e0811a1,0xf7537e82,0xbd3af235,0x2ad7d2bb,0xeb86d391];var r=o(o(f,l),o(a[b+m],q[k]));f=e;e=d;d=o(p(o(c,r),n[k]),d);c=g;g=j;j=i;i=h;h=d;d=e;e=f;f=c;c=g}c=o(c,g);d=o(d,h);e=o(e,i);f=o(f,j)}var t='';for(b=0;b<4;b++)for(k=0;k<4;k++)t+=(((b==0?c:b==1?d:b==2?e:f)>>>(k<<3))&255).toString(16).padStart(2,'0');return t}
+    function checkPassword() {
+      var v = document.getElementById('pwdInput').value;
+      if (md5(v) === H) {
+        sessionStorage.setItem('pray_auth', '1');
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('contentWrapper').classList.add('visible');
+      } else {
+        document.getElementById('errorMsg').style.display = 'block';
+        document.getElementById('pwdInput').value = '';
+      }
+    }
+    function doLogout() {
+      sessionStorage.removeItem('pray_auth');
+      document.getElementById('lockScreen').style.display = 'flex';
+      document.getElementById('contentWrapper').classList.remove('visible');
+    }
+    document.getElementById('pwdInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+    if (sessionStorage.getItem('pray_auth') === '1') {
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('contentWrapper').classList.add('visible');
+    }
+  </script>
+</body>
+</html>
