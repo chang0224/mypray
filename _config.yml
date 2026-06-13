@@ -1,0 +1,23 @@
+title: 기독교 기도문 모음
+description: 다양한 교회 상황에 맞는 기도문 위키
+remote_theme: just-the-docs/just-the-docs
+color_scheme: light
+
+# Build settings
+markdown: kramdown
+encoding: utf-8
+
+# Exclude from processing
+exclude:
+  - .gitignore
+  - LICENSE
+
+# Navigation
+nav_enabled: true
+
+# Search
+search_enabled: true
+search.heading_level: 3
+
+# Footer
+footer_content: "기독교 기도문 모음 | 은혜와 사랑으로"
