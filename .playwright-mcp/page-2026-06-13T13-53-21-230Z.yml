@@ -1,0 +1,6 @@
+- generic [ref=e3]:
+  - generic [ref=e4]: 🙏
+  - heading "기도문 모음" [level=1] [ref=e5]
+  - paragraph [ref=e6]: 열람을 위해 암호를 입력하세요
+  - textbox "••••" [ref=e7]
+  - button "확인" [ref=e8] [cursor=pointer]
