@@ -71,6 +71,15 @@ curl -s "https://www.duranno.com/qt/view/bible.asp?qtDate=${DATE}&d=k" | iconv -
 ### 본문 말씀: [성경 범위]
 **제목: [묵상 제목]**
 
+---
+
+### 오늘의 찬송
+**([찬송가 번호와 제목])**
+
+[가사 전문]
+
+---
+
 **[소제목1] ([절 범위])**
 
 > **[절번호]** [본문 내용]
@@ -80,13 +89,6 @@ curl -s "https://www.duranno.com/qt/view/bible.asp?qtDate=${DATE}&d=k" | iconv -
 
 > **[절번호]** [본문 내용]
 > ...
-
----
-
-### 오늘의 찬송
-**([찬송가 번호와 제목])**
-
-[가사 전문]
 
 ---
 
