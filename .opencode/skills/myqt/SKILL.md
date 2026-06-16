@@ -66,7 +66,7 @@ curl -s "https://www.duranno.com/qt/view/bible.asp?qtDate=${DATE}&d=k" | iconv -
 추출 결과를 아래 형식으로 정리:
 
 ```markdown
-## YYYY년 M월 D일 (요일) 매일성경
+## YYYY년 M월 D일 (요일) 생명의 삶
 
 ### 본문 말씀: [성경 범위]
 **제목: [묵상 제목]**
@@ -83,11 +83,13 @@ curl -s "https://www.duranno.com/qt/view/bible.asp?qtDate=${DATE}&d=k" | iconv -
 **[소제목1] ([절 범위])**
 
 > **[절번호]** [본문 내용]
+> [절마다 줄바꿈]
 > ...
 
 **[소제목2] ([절 범위])**
 
 > **[절번호]** [본문 내용]
+> [절마다 줄바꿈]
 > ...
 
 ---
