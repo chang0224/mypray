@@ -7,7 +7,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🙏</text></svg>">
   <link rel="apple-touch-icon" href="{{ '/assets/icon-180.png' | relative_url }}">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="기도문">
+  <meta name="apple-mobile-web-app-title" content="myQT">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; color: #333; }
@@ -68,7 +68,7 @@
   <div class="lock-screen" id="lockScreen">
     <div class="lock-box">
       <div class="lock-icon">🙏</div>
-      <h1>기도문 모음</h1>
+      <h1>my QT</h1>
       <p>열람을 위해 암호를 입력하세요</p>
       <input type="password" id="pwdInput" placeholder="••••" maxlength="10" autocomplete="off">
       <button onclick="checkPassword()">확인</button>
@@ -78,7 +78,7 @@
 
   <div class="content-wrapper" id="contentWrapper">
     <div class="site-header">
-      <a href="{{ '/' | relative_url }}">🙏 기도문 모음</a>
+      <a href="{{ '/' | relative_url }}">🙏 my QT</a>
       <span class="logout" onclick="doLogout()">잠금</span>
     </div>
     <div class="content">
