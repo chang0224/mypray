@@ -87,7 +87,10 @@
   </div>
 
   <script>
-    var HASH = '157b61ae6f4492e9c2fd81cd825779a6412d653afe87f15b6b42a50c5fcc8de7';
+    var ROUTES = {
+      '157b61ae6f4492e9c2fd81cd825779a6412d653afe87f15b6b42a50c5fcc8de7': '{{ "/myQT/" | relative_url }}',
+      'afc29d7e2a516e2f2de1dfd3e420f0c48d56ff1b888a8a31fedcaa2e07f3cfcd': '{{ "/prayers" | relative_url }}'
+    };
     async function sha256(str) {
       var buf = new TextEncoder().encode(str);
       var hash = await crypto.subtle.digest('SHA-256', buf);
@@ -96,10 +99,9 @@
     async function checkPassword() {
       var v = document.getElementById('pwdInput').value;
       var h = await sha256(v);
-      if (h === HASH) {
+      if (ROUTES[h]) {
         sessionStorage.setItem('pray_auth', '1');
-        document.getElementById('lockScreen').style.display = 'none';
-        document.getElementById('contentWrapper').classList.add('visible');
+        window.location.href = ROUTES[h];
       } else {
         document.getElementById('errorMsg').style.display = 'block';
         document.getElementById('pwdInput').value = '';
@@ -107,8 +109,7 @@
     }
     function doLogout() {
       sessionStorage.removeItem('pray_auth');
-      document.getElementById('lockScreen').style.display = 'flex';
-      document.getElementById('contentWrapper').classList.remove('visible');
+      window.location.href = '{{ "/" | relative_url }}';
     }
     document.getElementById('pwdInput').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkPassword();
